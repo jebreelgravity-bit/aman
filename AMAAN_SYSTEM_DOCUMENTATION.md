@@ -266,7 +266,7 @@ php artisan db:seed --class=AmaanSystemSeeder
 - 1 مدير (admin@amaan.com)
 - 5 سائقين (driver1-5@amaan.com)
 - 10 عملاء (customer1-10@amaan.com)
-- كلمة المرور لجميع الحسابات: `password`
+- كلمة المرور لجميع الحسابات: `admin123456`
 
 ### 3. إعدادات قاعدة البيانات
 تأكد من تحديث ملف `.env`:

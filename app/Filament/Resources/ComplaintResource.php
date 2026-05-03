@@ -3,16 +3,22 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ComplaintResource\Pages;
+use App\Filament\Traits\HasRoleAccess;
 use App\Models\Complaint;
 use Filament\Forms;
-use Filament\Schemas\Schema;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Notifications\Notification;
 
 class ComplaintResource extends Resource
 {
+    use HasRoleAccess;
+
+    /** الأدوار المسموح لها بالوصول */
+    protected static array $allowedRoles = ['admin', 'super_admin', 'support_manager'];
+
     protected static ?string $model = Complaint::class;
 
     protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-chat-bubble-left-right';

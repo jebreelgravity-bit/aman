@@ -68,17 +68,23 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->navigationGroups([
                 'لوحة التحكم',
-                'إدارة المستخدمين',
+                'المستخدمين',
                 'إدارة الرحلات',
                 'المالية والمحافظ',
+                'المحاسبة',
                 'إدارة الجودة',
                 'الإعدادات المالية',
-                'التسويق والتنبيهات',
                 'التسويق والعروض',
+                'التسويق والتنبيهات',
                 'دعم العملاء',
                 'السجلات والنظام',
                 'التقارير',
                 'الإعدادات',
+            ])
+            ->plugins([
+                \Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin::make()
+                    ->shouldRegisterNavigation(false)
+                    ->shouldShowAvatarForm()
             ])
             ->spa();
     }

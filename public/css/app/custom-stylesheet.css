@@ -1,0 +1,47 @@
+/* WeezyHero Inspired Theme */
+
+body {
+    background-color: #0b0c10 !important; /* Very dark background */
+}
+
+/* Make sidebars very dark too */
+.fi-sidebar {
+    background-color: #121215 !important;
+}
+
+/* Golden accents on stats and containers */
+.fi-wi-stats-overview-stat {
+    border: 1px solid #FFD700 !important;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.1) !important;
+    background-color: #1a1a1d !important;
+}
+
+.fi-ta-ctn { /* Tables */
+    border: 1px solid rgba(255, 215, 0, 0.5) !important;
+    background-color: #1a1a1d !important;
+}
+
+.fi-fo-ctn { /* Forms */
+    border: 1px solid rgba(255, 215, 0, 0.5) !important;
+    background-color: #1a1a1d !important;
+}
+
+/* Text coloring overriding */
+.fi-sidebar-item-label, .fi-header-heading {
+    color: #FFD700 !important;
+}
+
+/* Stats specific text */
+.fi-wi-stats-overview-stat-label {
+    color: #FFD700 !important;
+    font-weight: 700 !important;
+}
+
+.fi-wi-stats-overview-stat-value {
+    color: white !important;
+}
+
+/* Hide light/dark toggle because we force dark mode visually */
+.fi-theme-switcher {
+    display: none !important;
+}

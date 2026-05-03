@@ -148,8 +148,14 @@ class SystemSettings extends Page implements HasForms
 
     public function submit(): void
     {
+        $data = $this->form->getState();
+
+        // منع القيم الفارغة للحقول المطلوبة
+        $data['primary_color'] = $data['primary_color'] ?? '#FFD700';
+        $data['site_name']     = $data['site_name']     ?? 'نظام أمان';
+
         $settings = SystemSetting::firstOrCreate(['id' => 1]);
-        $settings->update($this->form->getState());
+        $settings->update($data);
 
         Notification::make()
             ->title('نجاح')

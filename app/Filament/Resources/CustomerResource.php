@@ -2,33 +2,40 @@
 
 namespace App\Filament\Resources;
 
-use Illuminate\Database\Eloquent\Builder;
-
 use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers;
+use App\Filament\Traits\HasRoleAccess;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Builder;
 
 class CustomerResource extends Resource
 {
+    use HasRoleAccess;
+
+    /** الأدوار المسموح لها بالوصول لهذا Resource */
+    protected static array $allowedRoles = ['admin', 'super_admin', 'support_manager'];
+
     protected static ?string $model = User::class;
+
+    protected static ?string $slug = 'customers';
 
     protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationLabel = 'العملاء والمشتركين';
+    protected static ?string $navigationLabel = 'المستخدمين';
 
-    protected static ?string $modelLabel = 'عميل';
+    protected static ?string $modelLabel = 'مستخدم';
 
-    protected static ?string $pluralModelLabel = 'العملاء والمشتركين';
+    protected static ?string $pluralModelLabel = 'المستخدمين';
 
-    protected static \UnitEnum|string|null $navigationGroup = 'إدارة المستخدمين';
+    protected static \UnitEnum|string|null $navigationGroup = 'المستخدمين';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 4;
 
     public static function getEloquentQuery(): Builder
     {
@@ -59,7 +66,8 @@ class CustomerResource extends Resource
                             ->tel()
                             ->maxLength(20),
 
-
+                        Forms\Components\Hidden::make('role')
+                            ->default('customer'),
 
                         Forms\Components\Toggle::make('is_active')
                             ->label('نشط')

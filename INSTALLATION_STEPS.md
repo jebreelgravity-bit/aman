@@ -152,7 +152,7 @@ http://localhost:8000/admin
 
 **بيانات الدخول:**
 - البريد: `admin@amaan.com`
-- كلمة المرور: `password`
+- كلمة المرور: `admin123456`
 
 ---
 

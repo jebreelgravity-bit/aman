@@ -3,15 +3,21 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PricingSettingResource\Pages;
+use App\Filament\Traits\HasRoleAccess;
 use App\Models\PricingSetting;
 use Filament\Forms;
-use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
 class PricingSettingResource extends Resource
 {
+    use HasRoleAccess;
+
+    /** الأدوار المسموح لها بالوصول */
+    protected static array $allowedRoles = ['admin', 'super_admin', 'financial_manager'];
+
     protected static ?string $model = PricingSetting::class;
 
     protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-currency-dollar';

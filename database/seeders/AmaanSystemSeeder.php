@@ -15,10 +15,10 @@ class AmaanSystemSeeder extends Seeder
     {
         // 1. Create Admin User
         $admin = User::firstOrCreate(
-            ['email' => 'admin@amaan.com'],
+            ['email' => 'admin@aman.com'],
             [
                 'name' => 'Admin',
-                'password' => 'password',
+                'password' => 'admin123456',
                 'role' => 'admin',
                 'phone' => '+9647700000000',
                 'is_active' => true,

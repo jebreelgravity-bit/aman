@@ -6,12 +6,17 @@ namespace App\Models;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+use Filament\Models\Contracts\HasAvatar;
+use Illuminate\Support\Facades\Storage;
+
+class User extends Authenticatable implements HasAvatar
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -21,13 +26,35 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'avatar_url',
         'password',
         'role',
         'phone',
         'is_active',
         'latitude',
         'longitude',
+        // حقول الهوية والبيانات الشخصية
+        'national_id',
+        'national_id_front',
+        'national_id_back',
+        'date_of_birth',
+        'address',
+        'city',
+        'gender',
+        // حقول المركبة (للسائقين)
+        'vehicle_plate',
+        'vehicle_type',
+        'vehicle_grade',
+        'vehicle_model',
+        'vehicle_color',
+        'vehicle_year',
+        'vehicle_photo',
     ];
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar_url ? Storage::url($this->avatar_url) : null;
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -48,10 +75,11 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'is_active' => 'boolean',
-            'latitude' => 'decimal:8',
-            'longitude' => 'decimal:8',
+            'password'          => 'hashed',
+            'is_active'         => 'boolean',
+            'latitude'          => 'decimal:8',
+            'longitude'         => 'decimal:8',
+            'date_of_birth'     => 'date',
         ];
     }
 
@@ -112,11 +140,27 @@ class User extends Authenticatable
     }
 
     /**
+     * Get user wallet
+     */
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class);
+    }
+
+    /**
      * Get ratings as driver
      */
     public function driverRatings()
     {
         return $this->hasMany(Rating::class, 'driver_id');
+    }
+
+    /**
+     * Get driver documents
+     */
+    public function driverDocuments()
+    {
+        return $this->hasMany(DriverDocument::class, 'driver_id');
     }
 
     /**

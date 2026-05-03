@@ -2,29 +2,36 @@
 
 namespace App\Filament\Resources;
 
-use Illuminate\Database\Eloquent\Builder;
-
 use App\Filament\Resources\AdminResource\Pages;
+use App\Filament\Traits\HasRoleAccess;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class AdminResource extends Resource
 {
+    use HasRoleAccess;
+
+    /** الأدوار المسموح لها بالوصول لهذا Resource */
+    protected static array $allowedRoles = ['admin', 'super_admin'];
+
     protected static ?string $model = User::class;
+
+    protected static ?string $slug = 'admins';
 
     protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-shield-check';
 
-    protected static ?string $navigationLabel = 'طاقم الإدارة';
+    protected static ?string $navigationLabel = 'المدراء';
 
     protected static ?string $modelLabel = 'مدير';
 
-    protected static ?string $pluralModelLabel = 'طاقم الإدارة';
+    protected static ?string $pluralModelLabel = 'المدراء';
 
-    protected static \UnitEnum|string|null $navigationGroup = 'الإدارة العليا';
+    protected static \UnitEnum|string|null $navigationGroup = 'المستخدمين';
 
     protected static ?int $navigationSort = 1;
 
@@ -57,7 +64,8 @@ class AdminResource extends Resource
                             ->tel()
                             ->maxLength(20),
 
-
+                        Forms\Components\Hidden::make('role')
+                            ->default('admin'),
 
                         Forms\Components\Toggle::make('is_active')
                             ->label('نشط')

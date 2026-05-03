@@ -3,15 +3,21 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CouponResource\Pages;
+use App\Filament\Traits\HasRoleAccess;
 use App\Models\Coupon;
 use Filament\Forms;
-use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
 class CouponResource extends Resource
 {
+    use HasRoleAccess;
+
+    /** الأدوار المسموح لها بالوصول */
+    protected static array $allowedRoles = ['admin', 'super_admin', 'marketing_manager'];
+
     protected static ?string $model = Coupon::class;
 
     protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-ticket';

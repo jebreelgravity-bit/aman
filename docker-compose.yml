@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  app:
+    image: php:8.2-fpm
+    container_name: laravel_app
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    depends_on:
+      - db
+    networks:
+      - laravel
+
+  webserver:
+    image: nginx:latest
+    container_name: laravel_nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - laravel
+
+  db:
+    image: mysql:8
+    container_name: laravel_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: aman
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    networks:
+      - laravel
+
+networks:
+  laravel:
